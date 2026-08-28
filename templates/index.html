@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Image Color Finder</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicon displayed in the browser tab -->
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='color_wheel.png') }}">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS files used by the template -->
+  <link href="/static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/static/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/static/assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="/static/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="/static/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+
+  <!-- Main stylesheet -->
+  <link href="/static/css/main.css" rel="stylesheet">
+
+</head>
+
+<body class="index-page">
+  <!-- Header / Navigation -->
+  <header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+      <!-- Website title -->
+      <a href="{{ url_for('home') }}" class="logo d-flex align-items-center">
+        <h1 class="sitename">Image Color Finder</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- Introduction Section -->
+    <section id="about" class="about section">
+
+      <!-- Section title and project description -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Image Color Finder</h2>
+        <p> The Image Color Finder pulls the most common colors out of an image file.<br>
+            The color values are in hexadecimal.<br>
+            You can try it out below. Upload a file or use the sample image provided. </p>
+      </div>
+      <!-- Image preview and extracted colors -->
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row gy-4">
+          <!-- Display the currently selected image -->
+          <div class="col-lg-6">
+            <img src="{{ url_for('static', filename=file_path) }}">
+          </div>
+          <!-- Display the top 10 most common colors -->
+          <div class="col-lg-6 content ">
+            <div class="colors-container">
+                {% for color in colors %}
+                    <!-- Individual color card -->
+                    <div class="color-card">
+                      <!-- Preview of the extracted color -->
+                        <div class="color-preview" style="background-color: {{ color.color_hex }};"></div>
+                        <div class="color-info">
+                          <!-- HEX value and percentage of the image -->
+                            <span>{{ color.color_hex }}</span>
+                            <span>{{ color.color_procent | round(2) }}%</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+
+
+
+          </div>
+        </div>
+
+      </div>
+
+    <!-- Image Upload Section -->
+    <section id="features" class="features section">
+        <div class="container">
+
+          <div class="upload-box">
+            <h3>Upload an Image</h3>
+            <p>Choose an image and discover its 10 most common colours.</p>
+            <!-- Upload form -->
+            <form action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
+              <!-- Only image files can be selected -->
+              <input type="file" name="image" accept="image/*" required>
+              <button type="submit">Upload Image</button>
+            </form>
+            <!-- Display an error message if no image was selected -->
+            {% if error %}
+                <p>{{ error }}</p>
+            {% endif %}
+          </div>
+
+        </div>
+      </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer id="footer" class="footer dark-background">
+
+      <div class="container">
+        <div class="copyright">
+          <span>Copyright</span> <strong class="px-1 sitename">Image Color Finder</strong> <span>All Rights Reserved</span>
+        </div>
+        <div class="credits">
+          Designed by Monica
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll-to-top button -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="/static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/assets/vendor/aos/aos.js"></script>
+
+
+  <!-- Main JS File -->
+  <script src="/static/js/main.js"></script>
+
+</body>
+
+</html>
